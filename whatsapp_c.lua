@@ -8,12 +8,22 @@ local chat_Windows = {};
 local statusTable = {{'Both (All)'}, {'Online'}, {'Offline'}};
 
 local badWordsTable = {
-    {'xddd'},
+    {':v'},
 };
 
-function clickTimer(element, timer)
-    guiSetEnabled(element, false)
-    setTimer(guiSetEnabled, timer * 1000, 1, element, true)
+function getFormatedTime ()
+	local time = getRealTime()
+	local hours = time.hour
+	local minutes = time.minute
+
+    if (hours < 10) then
+		hours = "0"..hours
+	end
+	if (minutes < 10) then
+		minutes = "0"..minutes
+	end
+    return hours .. minutes
+
 end
 
 function sendNewMessage(playerName, message)
@@ -23,8 +33,9 @@ function sendNewMessage(playerName, message)
 	-- checks if there are censored words
 	for _, badWord in ipairs(badWordsTable) do
 		if (string.find(message, badWord[1])) then
-			--TODO: send waring to player (localPlayer)
 			
+            executeBrowserJavascript(source,"showBanner('.banner.error')")
+
 			sendTimer = setTimer(function()
 				killTimer(sendTimer)
 			end, 2500, 1)
@@ -36,7 +47,7 @@ function sendNewMessage(playerName, message)
 		-- sends the message
 		triggerServerEvent('onServerSendMessage', Cplayer, player, message)
 		-- put message sended in the web app
-		executeBrowserJavascript(source,"app.sendMessage('".. message .."','".. getPlayerName(Cplayer) .."')")
+		executeBrowserJavascript(source,"app.sendMessage('".. message .."','".. getPlayerName(Cplayer) .."','".. getFormatedTime() .."')")
 
 		sendTimer = setTimer(function() killTimer(sendTimer) end, 2500, 1)
 	end
@@ -44,11 +55,13 @@ end
 addEvent('sendMessageFromWebApp',true)
 addEventHandler('sendMessageFromWebApp',root, sendNewMessage)
 
-function removePlayer(player)
-    local name = getPlayerName(player)
-	outputConsole('web browser is '..tostring(isElement(webBroser)))
-	executeBrowserJavascript(theBrowser,"app.removePlayerFromContacts('".. name .."')")
+function resiveMessage(player, message)
+	executeBrowserJavascript(theBrowser,"app.resiveMessage('".. message .."','".. getPlayerName(player).."','".. getFormatedTime() .."')")
 end
+
+addEvent('onClientReceiveMessage', true);
+addEventHandler('onClientReceiveMessage', root, resiveMessage)
+
 
 local txtValue = 0
 
@@ -71,17 +84,6 @@ end
 addEvent('onClientShowWrite', true);
 addEventHandler('onClientShowWrite', root, showWriteMessage)
 
-addEvent('onChatChange')
-addEventHandler('onChatChange', root, function()
-	triggerServerEvent('onServerCheckShow', Cplayer, player, getPlayerName(Cplayer))
-end);
-
-addEvent('onClientReceiveMessage', true);
-addEventHandler('onClientReceiveMessage', root, function(player, message)			
-	-- send the message to the web app			  
-	executeBrowserJavascript(theBrowser,"app.resiveMessage('".. message .."','".. getPlayerName(player).."')")
-end);
-
 function addPlayer(player, webBrowser)
     local data = getElementData(player, 'chatStatus') or 'Online'
     local name = getPlayerName(player)
@@ -91,6 +93,22 @@ function addPlayer(player, webBrowser)
 		executeBrowserJavascript(webBrowser, "app.contacts.push({name: '".. name .."',status: '".. data .."',color: ["..r..","..g..","..b.."]})");	
 	end,1000,1)
 end
+
+function removePlayer(player)
+    local name = getPlayerName(player)
+	outputConsole('web browser is '..tostring(isElement(webBroser)))
+	executeBrowserJavascript(theBrowser,"app.removePlayerFromContacts('".. name .."')")
+end
+
+addEventHandler('onClientBrowserDocumentReady', resourceRoot, function()
+    triggerServerEvent('onServerSetPlayerSerial', Cplayer)
+    setTimer(function(webBr)
+        for _, player in ipairs(getElementsByType('player')) do
+            addPlayer(player,webBr)
+        end
+    end, 1000, 1,source)
+end);
+
 
 function player_Join(player)
 
@@ -108,12 +126,3 @@ function player_Quit(player)
 end
 addEvent('onClientRemovePlayer', true);
 addEventHandler('onClientRemovePlayer', root, player_Quit)
-
-addEventHandler('onClientBrowserDocumentReady', resourceRoot, function()
-    triggerServerEvent('onServerSetPlayerSerial', Cplayer)
-    setTimer(function(webBr)
-        for _, player in ipairs(getElementsByType('player')) do
-            addPlayer(player,webBr)
-        end
-    end, 1000, 1,source)
-end);

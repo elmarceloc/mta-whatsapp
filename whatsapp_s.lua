@@ -1,14 +1,3 @@
-local chatSystemDB = dbConnect( 'sqlite', 'Chat System - Database.db' )
-dbExec( chatSystemDB, 'CREATE TABLE IF NOT EXISTS `Chat_System` (sourceSerial, blockedSerial)' )
-
-addEvent( 'onServerCheckShow', true );
-addEventHandler( 'onServerCheckShow', root,
-function( player, name )
-	if ( player and player ~= source ) then
-		triggerClientEvent( player, 'onClientShowWrite', source, source, name )
-	end
-end );
-
 addEventHandler( 'onPlayerJoin', getRootElement(  ),
 function(  )
 	triggerClientEvent( root, 'onClientAddPlayer', source, source )

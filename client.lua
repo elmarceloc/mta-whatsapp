@@ -75,9 +75,7 @@ function toggle()
     end
 
     if not visible then return end
-    dxDrawImage(phoneX - 28, phoneY - 95 - 22, phoneWidth + 72 + -20,
-                phoneHeight, 'img/3.png', 0, 0, 0, tocolor(255, 255, 255, 255),
-                false)
+    dxDrawImage(phoneX - 28, phoneY - 95 - 22, phoneWidth + 72 + -20,phoneHeight, 'img/3.png', 0, 0, 0, tocolor(255, 255, 255, 255),false)
 end
 addEventHandler('onClientRender', root, toggle)
 

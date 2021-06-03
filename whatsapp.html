@@ -6,7 +6,8 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="./component_files/tailwind.min.css" rel="stylesheet" />
+    <link href="./css/tailwind.min.css" rel="stylesheet" />
+    <link href="./css/banner.css" rel="stylesheet" />
     <style>
       .contact{
           background: white;
@@ -26,6 +27,16 @@
     class="h-screen overflow-hidden flex items-center"
     style="background: #edf2f7"
   >
+  <div class="banners-container">
+    <div class="banners">
+        <div class="banner error">
+            <div class="banner-icon"><i data-eva="alert-circle-outline" data-eva-fill="#ffffff" data-eva-height="48" data-eva-width="48"></i></div>
+            <div class="banner-message">it is not allowed to insult on this cristian server 😇</div>
+            <div class="banner-close" onclick="hideBanners()"><i data-eva="close-outline" data-eva-fill="#ffffff"></i></div>
+        </div>
+        
+    </div>
+</div>
     <div>
       <div class="w-full h-32" style="background-color: #449388"></div>
 
@@ -33,9 +44,9 @@
         <div class="py-6 h-screen">
           <div
             class="flex border border-grey rounded shadow-lg h-full"
-            style="width: 400px"
+            style="width: 400px;    height: 310px;
+            "
           >
-            <!-- Left -->
 
             <!-- Right -->
             <div class="border flex flex-col" style="
@@ -53,9 +64,15 @@
                   items-center
                 "
               >
-                <div class="flex items-center">
+                <div v-if="!showContacts"  class="flex items-center">
                   <div class="ml-4">
-                    <p class="text-grey-darkest">{{author}}</p>
+                    <p class="text-grey-darkest">
+                      <img @click="goback()" src="img/back.svg" width="30px" alt="" srcset="">
+                      <span style=" 
+                        position: absolute;
+                        top: 40px;
+                        left: 70px;
+                    "> {{author}}</span></p>
                   </div>
                 </div>
 
@@ -96,6 +113,7 @@
               <div
                 class="flex-1 overflow-auto"
                 style="background-color: #dad3cc"
+                id="chat"
               >
                 <div class="py-2 px-3">
 <!--<img src="img/avatar.png" class="rounded-full" width="50px" srcset=""> -->
@@ -117,36 +135,28 @@
                       style="background-color: #fcf4cb"
                     >
                       <p class="text-xs">
-                        Messages to this chat and calls are now secured with
+                        Messages to this chat are NOT secured with
                         end-to-end encryption.
                       </p>
                     </div>
                   </div>
 
 
-                  <div :class="{'justify-end': !message.resived}" v-html="message.msg" v-for="message in messages" class="flex mb-2">
+                  <div :class="{'justify-end': !message.resived}" v-html="message.msg" v-if="message.author == author && !showContacts" v-for="message in messages" class="flex mb-2">
                   </div>
+
               </div>
 
               <!-- Input -->
               <div v-if="!showContacts" style="position: fixed;top: 330px;width: 400px;" class="bg-grey-lighter px-4 py-4 flex items-center">
                 <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path
-                      opacity=".45"
-                      fill="#263238"
-                      d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"
-                    ></path>
-                  </svg>
+
                 </div>
+
                 <div class="flex-1 mx-4">
-                  <input v-model="message" class="w-full border rounded px-2 py-2" type="text" />
+                  <input placeholder="cj follow the damn train..." v-on:keyup="onKeyPress" v-model="message" class="w-full border rounded px-2 py-2" type="text" />
                 </div>
+
                 <button @click="sendToServer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,97 +187,9 @@
     </div>
 
     <script src="js/vue.js"></script>
-
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                date: '',
-                author: '',
-                showContacts: true,
-                contacts: [],
-                messages: [],
-                message: ''
-            },methods: {
-              resiveMessage: function(message, author){
-                this.msg = 
-                  `<div class="flex ">
-                    <div
-                      class="rounded py-2 px-3"
-                      style="background-color: #f2f2f2;padding:8px!important"
-                    >
-                      <p class="text-sm text-purple">${author}</p>
-                      <p class="text-xs mt-1">${message}</p>
-                      <p class="text-right text-xs text-grey-dark mt-1">
-                        <!-- pm -->
-                      </p>
-                    </div>
-                  </div>`;
-
-                  this.messages.push({
-                    msg: this.msg,
-                    author:author,
-                    resived: true
-                  });
-              },
-              sendMessage: function(message, author){
-                  this.msg =
-                    `<div class="flex justify-end ">
-                      <div
-                        class="rounded py-2 px-3"
-                        style="background-color: #e2f7cb;padding:8px!important"
-                      >
-                        <p class="text-xs mt-1">${message}</p>
-                        <p class="text-right text-xs text-grey-dark mt-1">
-                          <!-- pm -->
-                        </p>
-                      </div>
-                    </div>`;
-                  
-                    this.messages.push({
-                      msg: this.msg,
-                      author: author,
-                      resived: false
-                    });
-              },
-              selectContact: function(name) {
-                this.showContacts = false
-                this.author = name // format
-              },
-              sendToServer: function() {
-                //app.sendMessage('Hola Marcelo','caca')
-                mta.triggerEvent("sendMessageFromWebApp",this.author, this.message)
-                this.message = ''
-              }
-            }
-        })
-
-      /*  app.sendMessage('Hola Marcelo','caca')
-        app.resiveMessage('Hola weon','caca')
-        app.sendMessage('Hola fff','caca')
-
-
-
-
-
-
-// port this
- if (guiGetText(chat_Windows[player].editBox) ~= '') then
-            triggerServerEvent('onServerCheckShow', Cplayer, player,
-                               getPlayerName(Cplayer))
-
-
-
-*/
-
-
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        
-        app.date = mm + '/' + dd + '/' + yyyy;
-    </script>
+    <script src="js/vue-emoji-picker.js"></script>
+    <script src="js/banner.js"></script>
+    <script src="js/main.js"></script>
 
   </body>
 </html>

@@ -9,11 +9,16 @@
 	<script src="whatsapp_c.lua" type="client" />
 	<script src="whatsapp_s.lua" type="server" />
 
-	<file src="component_files/tailwind.min.css" />
+	<file src="css/tailwind.min.css" />
+	<file src="css/banner.css" />
+	<file src="css/vue-emoji.css" />
 
+    <file src="js/banner.js"></file>
+    <file src="js/main.js"></file>
+    <file src="js/vue-emoji-picker.js"></file>
 
 	<file src="img/3.png" />
 	<file src="img/avatar.png" />
-	<file src="img/back.png" />
+	<file src="img/back.svg" />
 
 </meta>
