@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)file:///D:/Pruebas/server/mods/deathmatch/resources/whatsapp/loto.html -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./component_files/tailwind.min.css" rel="stylesheet" />
+    <style>
+      .contact{
+          background: white;
+          padding: 10px;
+          margin-bottom: 2px;
+          border: 3px
+      }
+      .contact:hover{
+        background: rgb(233, 233, 233);
+      }
+      .contact:active{
+        background: rgb(162, 162, 162);
+      }
+  </style>
+  </head>
+  <body
+    class="h-screen overflow-hidden flex items-center"
+    style="background: #edf2f7"
+  >
+    <div>
+      <div class="w-full h-32" style="background-color: #449388"></div>
+
+      <div id="app" class="container mx-auto" style="margin-top: -128px">
+        <div class="py-6 h-screen">
+          <div
+            class="flex border border-grey rounded shadow-lg h-full"
+            style="width: 400px"
+          >
+            <!-- Left -->
+
+            <!-- Right -->
+            <div class="border flex flex-col" style="
+            border-style: none!important; 
+            border-color: none!important;
+            width: 400px">
+              <!-- Header -->
+              <div
+                class="
+                  py-2
+                  px-3
+                  bg-grey-lighter
+                  flex flex-row
+                  justify-between
+                  items-center
+                "
+              >
+                <div class="flex items-center">
+                  <div class="ml-4">
+                    <p class="text-grey-darkest">{{author}}</p>
+                  </div>
+                </div>
+
+                <div class="flex">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        fill="#263238"
+                        fill-opacity=".5"
+                        d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"
+                      ></path>
+                    </svg>
+                  </div>
+                 
+                  <div class="ml-6">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        fill="#263238"
+                        fill-opacity=".6"
+                        d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Messages -->
+              <div
+                class="flex-1 overflow-auto"
+                style="background-color: #dad3cc"
+              >
+                <div class="py-2 px-3">
+<!--<img src="img/avatar.png" class="rounded-full" width="50px" srcset=""> -->
+                  <div @click="selectContact(contact.name)" v-if="showContacts" v-for="(contact,index) in contacts" class="contact"><span>{{contact.name}}</span></div>
+
+
+                  <div v-if="!showContacts" class="flex justify-center mb-2">
+                    <div
+                      class="rounded py-2 px-4"
+                      style="background-color: #ddecf2"
+                    >
+                      <p class="text-sm uppercase">{{date}}</p>
+                    </div>
+                  </div>
+
+                  <div v-if="!showContacts" class="flex justify-center mb-4">
+                    <div
+                      class="rounded py-2 px-4"
+                      style="background-color: #fcf4cb"
+                    >
+                      <p class="text-xs">
+                        Messages to this chat and calls are now secured with
+                        end-to-end encryption.
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <div :class="{'justify-end': !message.resived}" v-html="message.msg" v-for="message in messages" class="flex mb-2">
+                  </div>
+              </div>
+
+              <!-- Input -->
+              <div v-if="!showContacts" style="position: fixed;top: 330px;width: 400px;" class="bg-grey-lighter px-4 py-4 flex items-center">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <path
+                      opacity=".45"
+                      fill="#263238"
+                      d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="flex-1 mx-4">
+                  <input v-model="message" class="w-full border rounded px-2 py-2" type="text" />
+                </div>
+                <button @click="sendToServer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                  <g xmlns="http://www.w3.org/2000/svg" id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Two-Tone" transform="translate(-374.000000, -1529.000000)">
+                        <g id="Content" transform="translate(100.000000, 1428.000000)">
+                            <g id="Two-Tone-/-Content-/-send" transform="translate(272.000000, 98.000000)">
+                                <g>
+                                    <polygon id="Path" points="0 0 24 0 24 24 0 24"/>
+                                    <path d="M4,8.25 L11.51,9.25 L4.01,6.03 L4,8.25 Z M4.01,17.97 L11.51,14.75 L4,15.75 L4.01,17.97 Z" id="🔹-Secondary-Color" fill="#263238"/>
+                                    <path d="M2.01,3 L2,10 L17,12 L2,14 L2.01,21 L23,12 L2.01,3 Z M4,8.25 L4,6.03 L11.51,9.25 L4,8.25 Z M4.01,17.97 L4.01,15.75 L11.52,14.75 L4.01,17.97 Z" id="🔹-Primary-Color" fill="#263238"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                date: '',
+                author: '',
+                showContacts: true,
+                contacts: [],
+                messages: [],
+                message: ''
+            },methods: {
+              resiveMessage: function(message, author){
+                this.msg = 
+                  `<div class="flex ">
+                    <div
+                      class="rounded py-2 px-3"
+                      style="background-color: #f2f2f2;padding:8px!important"
+                    >
+                      <p class="text-sm text-purple">${author}</p>
+                      <p class="text-xs mt-1">${message}</p>
+                      <p class="text-right text-xs text-grey-dark mt-1">
+                        <!-- pm -->
+                      </p>
+                    </div>
+                  </div>`;
+
+                  this.messages.push({
+                    msg: this.msg,
+                    author:author,
+                    resived: true
+                  });
+              },
+              sendMessage: function(message, author){
+                  this.msg =
+                    `<div class="flex justify-end ">
+                      <div
+                        class="rounded py-2 px-3"
+                        style="background-color: #e2f7cb;padding:8px!important"
+                      >
+                        <p class="text-xs mt-1">${message}</p>
+                        <p class="text-right text-xs text-grey-dark mt-1">
+                          <!-- pm -->
+                        </p>
+                      </div>
+                    </div>`;
+                  
+                    this.messages.push({
+                      msg: this.msg,
+                      author: author,
+                      resived: false
+                    });
+              },
+              selectContact: function(name) {
+                this.showContacts = false
+                this.author = name // format
+              },
+              sendToServer: function() {
+                //app.sendMessage('Hola Marcelo','caca')
+                mta.triggerEvent("sendMessageFromWebApp",this.author, this.message)
+                this.message = ''
+              }
+            }
+        })
+
+      /*  app.sendMessage('Hola Marcelo','caca')
+        app.resiveMessage('Hola weon','caca')
+        app.sendMessage('Hola fff','caca')
+
+
+
+
+
+
+// port this
+ if (guiGetText(chat_Windows[player].editBox) ~= '') then
+            triggerServerEvent('onServerCheckShow', Cplayer, player,
+                               getPlayerName(Cplayer))
+
+
+
+*/
+
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        
+        app.date = mm + '/' + dd + '/' + yyyy;
+    </script>
+
+  </body>
+</html>
+
+
+
+

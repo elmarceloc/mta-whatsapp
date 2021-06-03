@@ -4,19 +4,16 @@
 	<script src="client.lua" type="client" />
 	<file src="js/vue.js" />
 	
-	<file src="chat.html" />
-	<file src="friends.html" />
-	<script src="server.lua" type="server" />
-	<script src="server2.lua" type="server" />
-	<script src="client2.lua" type="client" />
+	<file src="whatsapp.html" />
+
+	<script src="whatsapp_c.lua" type="client" />
+	<script src="whatsapp_s.lua" type="server" />
 
 	<file src="component_files/tailwind.min.css" />
 
 
 	<file src="img/3.png" />
-	<file src="img/activo.png" />
-	<file src="img/btn-jugar.png" />
-	<file src="img/logo.png" />
-	<file src="img/win.png" />
+	<file src="img/avatar.png" />
+	<file src="img/back.png" />
 
 </meta>
