@@ -22,7 +22,7 @@ function getFormatedTime ()
 	if (minutes < 10) then
 		minutes = "0"..minutes
 	end
-    return hours .. minutes
+    return hours ..':' .. minutes
 
 end
 
@@ -63,26 +63,19 @@ addEvent('onClientReceiveMessage', true);
 addEventHandler('onClientReceiveMessage', root, resiveMessage)
 
 
-local txtValue = 0
 
-function showWriteMessage(player, name)
-    if (isTimer(writeTimer)) then return end
-	-- TODO: send Player is writing message
-   -- guiSetText(chat_Windows[player].Label, '* [' .. name .. '] is typing')
-   
-    writeTimer = setTimer(function()
-        if (txtValue >= 3) then
-            --guiSetText(chat_Windows[player].Label,
-            --           '* [' .. name .. '] is typing')
-            txtValue = 0
-        end
-       -- guiSetText(chat_Windows[player].Label,
-       --            guiGetText(chat_Windows[player].Label) .. '.')
-        txtValue = txtValue + 1
-    end, 500, 0)
+function sendIsTyping(playerName)
+    triggerServerEvent('onServerSendIsTyping',localPlayer,getPlayerFromName(playerName))
 end
-addEvent('onClientShowWrite', true);
-addEventHandler('onClientShowWrite', root, showWriteMessage)
+addEvent('isTyping', true);
+addEventHandler('isTyping', root, sendIsTyping)
+
+function showIsTyping()
+    executeBrowserJavascript(theBrowser,"app.showIsTyping('".. getPlayerName(source) .."')")
+end
+addEvent('onClientShowIsTyping', true);
+addEventHandler('onClientShowIsTyping', root, showIsTyping)
+
 
 function addPlayer(player, webBrowser)
     local data = getElementData(player, 'chatStatus') or 'Online'

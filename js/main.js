@@ -16,9 +16,7 @@ function scrollChat() {
           contacts: [],
           messages: [],
           message: '',
-
-          input: '',
-          search: '',
+          playersWritingToMe: []
       },methods: {
         resiveMessage: function(message, author, time){
           this.msg = 
@@ -27,7 +25,6 @@ function scrollChat() {
                 class="rounded py-2 px-3"
                 style="background-color: #f2f2f2;padding:8px!important"
               >
-                <p class="text-sm text-purple">${author}</p>
                 <p class="text-sm mt-1">${message}</p>
                 <p class="text-right text-xs text-grey-dark mt-1">
                   ${time} pm 
@@ -87,9 +84,20 @@ function scrollChat() {
             this.message = ''
           }
         },
-        append(emoji) {
-          this.input += emoji
-        },
+        showIsTyping: function(name){
+          if(!this.playersWritingToMe.includes(name)){
+            this.playersWritingToMe.push(name)
+            // delates the player from writing to me list..
+            var self = this
+            setTimeout(function() {
+              const index =  self.playersWritingToMe.indexOf(name);
+              if (index > -1) {
+                self.playersWritingToMe.splice(index, 1);
+              }
+            }, 1200);
+          }
+        }
+
         //todo: poder mandar ubicacion
       },directives: {
         focus: {
@@ -118,6 +126,12 @@ if (guiGetText(chat_Windows[player].editBox) ~= '') then
 
 */
 
+function isTyping() {
+  setTimeout(function() {
+    mta.triggerEvent('isTyping',app.author)
+  },200);
+  
+}
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');

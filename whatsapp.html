@@ -21,6 +21,13 @@
       .contact:active{
         background: rgb(162, 162, 162);
       }
+      .typing{
+        font-size: 12px;
+
+        position: absolute;
+        top: 60px;
+        left: 70px;
+      }
   </style>
   </head>
   <body
@@ -72,7 +79,8 @@
                         position: absolute;
                         top: 40px;
                         left: 70px;
-                    "> {{author}}</span></p>
+                    "> {{author}}</span>
+                    <span class="typing" v-if="playersWritingToMe.includes(author)">typing... </span></p>
                   </div>
                 </div>
 
@@ -154,7 +162,7 @@
                 </div>
 
                 <div class="flex-1 mx-4">
-                  <input placeholder="cj follow the damn train..." v-on:keyup="onKeyPress" v-model="message" class="w-full border rounded px-2 py-2" type="text" />
+                  <input onkeydown="isTyping()" placeholder="cj follow the damn train..." v-on:keyup="onKeyPress" v-model="message" class="w-full border rounded px-2 py-2" type="text" />
                 </div>
 
                 <button @click="sendToServer">

@@ -29,3 +29,10 @@ function(  )
 	triggerClientEvent( root, 'onClientPutPlayers', player, plrName, plrStatus )
 	end
 end );
+
+addEvent( 'onServerSendIsTyping', true );
+addEventHandler( 'onServerSendIsTyping', root,
+function( player )
+	-- test with VM
+	triggerClientEvent( player, 'onClientShowIsTyping',source )
+end );
