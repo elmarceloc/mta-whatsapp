@@ -9,6 +9,9 @@
     <link href="./css/tailwind.min.css" rel="stylesheet" />
     <link href="./css/banner.css" rel="stylesheet" />
     <style>
+      body{
+        background-color: #dad3cc!important;
+      }
       .contact{
           background: white;
           padding: 10px;
@@ -25,8 +28,14 @@
         font-size: 12px;
 
         position: absolute;
-        top: 60px;
+        top: 34px;
         left: 70px;
+      }
+      .team{
+        position: relative;
+        padding-left: 240px;
+        font-size: 12px;
+        color: gray;
       }
   </style>
   </head>
@@ -47,11 +56,11 @@
     <div>
       <div class="w-full h-32" style="background-color: #449388"></div>
 
-      <div id="app" class="container mx-auto" style="margin-top: -128px">
+      <div id="app" class="container mx-auto" style="    margin-top: -178px;      ">
         <div class="py-6 h-screen">
           <div
-            class="flex border border-grey rounded shadow-lg h-full"
-            style="width: 400px;    height: 310px;
+            class="flex border border-grey rounded h-full"
+            style="width: 400px;    height: 330px;border:none;important
             "
           >
 
@@ -77,7 +86,7 @@
                       <img @click="goback()" src="img/back.svg" width="30px" alt="" srcset="">
                       <span style=" 
                         position: absolute;
-                        top: 40px;
+                        top: 14px;
                         left: 70px;
                     "> {{author}}</span>
                     <span class="typing" v-if="playersWritingToMe.includes(author)">typing... </span></p>
@@ -124,9 +133,17 @@
                 id="chat"
               >
                 <div class="py-2 px-3">
+                  <p v-if="contacts.length == 0" style="color: gray;text-align:center">loading contacts...</p>
 <!--<img src="img/avatar.png" class="rounded-full" width="50px" srcset=""> -->
-                  <div @click="selectContact(contact.name)" v-if="showContacts" v-for="(contact,index) in contacts" class="contact"><span>{{contact.name}}</span></div>
-
+                  <div @click="selectContact(contact.name)" v-if="showContacts" v-for="(contact,index) in contacts" class="contact">
+                    <span>{{contact.name}}</span>
+                    <div  v-if="contact.team" style="
+                      display: inline-block;
+                      width: 340px;
+                      text-align: right;
+                  "><span class="team" >{{contact.team}}</span></div>
+                  </div>
+                  
 
                   <div v-if="!showContacts" class="flex justify-center mb-2">
                     <div
@@ -162,7 +179,7 @@
                 </div>
 
                 <div class="flex-1 mx-4">
-                  <input onkeydown="isTyping()" placeholder="cj follow the damn train..." v-on:keyup="onKeyPress" v-model="message" class="w-full border rounded px-2 py-2" type="text" />
+                  <input onkeydown="isTyping()" placeholder="follow the damn train..." v-on:keyup="onKeyPress" v-model="message" class="w-full border rounded px-2 py-2" type="text" />
                 </div>
 
                 <button @click="sendToServer">

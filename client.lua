@@ -85,7 +85,6 @@ addEventHandler("onClientResourceStart",
     -- toggle(false)
     -- resizeBrowser( theBrowser, 0, 0 )
 
-    -- if isPlayerInTeam(source, getTeamFromName("Repartidor") ) then return end
     bindKey("n", "down", function()
 
         if not state then

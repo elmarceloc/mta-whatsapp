@@ -74,9 +74,10 @@ function scrollChat() {
           this.showContacts = true
         },
         sendToServer: function() {
-          //app.sendMessage('Hola Marcelo','caca')
-          mta.triggerEvent("sendMessageFromWebApp",this.author, this.message)
-          this.message = ''
+          if(this.message.length > 0){
+            mta.triggerEvent("sendMessageFromWebApp",this.author, this.message)
+            this.message = ''
+          }
         },
         onKeyPress: function(e) {
           if (e.keyCode === 13) {

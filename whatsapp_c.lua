@@ -78,12 +78,25 @@ addEventHandler('onClientShowIsTyping', root, showIsTyping)
 
 
 function addPlayer(player, webBrowser)
-    local data = getElementData(player, 'chatStatus') or 'Online'
+    local status = getElementData(player, 'chatStatus') or 'Online'
     local name = getPlayerName(player)
     local r, g, b = getPlayerNametagColor(player)
 
+    local jsPayload =  "app.contacts.push({name: '".. name .."',status: '".. status .."',color: ["..r..","..g..","..b.."]"
+
+    local team = getPlayerTeam(player)
+
+    if team then
+        local teamr, teamg, teamb = getTeamColor(team)
+        local teamName = getTeamName(team)
+
+        jsPayload = jsPayload .. ",team: '"..teamName.."',teamcolor: ["..teamr..","..teamg..","..teamb.."]"
+    end
+
+    jsPayload = jsPayload .. '})'
+
 	setTimer(function()
-		executeBrowserJavascript(webBrowser, "app.contacts.push({name: '".. name .."',status: '".. data .."',color: ["..r..","..g..","..b.."]})");	
+		executeBrowserJavascript(webBrowser, jsPayload);	
 	end,1000,1)
 end
 
