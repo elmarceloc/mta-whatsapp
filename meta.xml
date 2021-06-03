@@ -1,0 +1,22 @@
+<meta>
+	<!-- Auto generated using VSCode MTA:SA Lua by Subtixx -->
+	<info author="VSCode MTA:SA Lua" type="script" name="phone" version="0.1.0" />
+	<script src="client.lua" type="client" />
+	<file src="js/vue.js" />
+	
+	<file src="chat.html" />
+	<file src="friends.html" />
+	<script src="server.lua" type="server" />
+	<script src="server2.lua" type="server" />
+	<script src="client2.lua" type="client" />
+
+	<file src="component_files/tailwind.min.css" />
+
+
+	<file src="img/3.png" />
+	<file src="img/activo.png" />
+	<file src="img/btn-jugar.png" />
+	<file src="img/logo.png" />
+	<file src="img/win.png" />
+
+</meta>
