@@ -1,1 +1,2 @@
-# A Whatsapp Clone for MTA SA
+# A Whatsapp Clone for Multi Theft Auto: San andreas
+Build in HTML,CSS,JS and Lua, this project aims to replicate whatsapp messaging application in MTA SA, through the use of Chromium Embedded Framework, MTA SA is able to run a chrome instance inside the game (https://wiki.multitheftauto.com/wiki/CEF_Tutorial), the messaging system between players is build using the event based client-server comunication from mta (note: is not encripted 👀)
